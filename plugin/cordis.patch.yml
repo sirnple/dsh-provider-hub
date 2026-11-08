@@ -2,4 +2,4 @@
 # component keeps its own configuration and lifecycle.
 - insert:
     - id: provider-accounts
-      name: dsh-provider-hub
+      name: "@sirnple/dsh-provider-hub"

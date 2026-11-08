@@ -1,10 +1,10 @@
 {
-  "name": "dsh-provider-hub",
+  "name": "@sirnple/dsh-provider-hub",
   "version": "1.0.0",
   "private": true,
-  "description": "Model provider & account manager for DeepSeek Harness: onboard third-party providers, keep several API-key accounts per provider, switch the active one, and fail over automatically on quota errors.",
+  "description": "Model provider and account hub for DeepSeek Harness: multi-account API keys per provider with failover, a per-account usage/quota panel in the conversation header, and native Grok Build device-code OAuth.",
   "type": "module",
-  "icon": "./icon.svg",
+  "icon": "./assets/icon-180.png",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -20,7 +20,8 @@
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
-    "README.md"
+    "README.md",
+    "assets/icon-180.png"
   ],
   "peerDependencies": {
     "@deepseek-ai/schemastery": "^3.18.5"
@@ -43,5 +44,32 @@
         "@deepseek-ai/dsh-api-remotes"
       ]
     }
+  },
+  "license": "MIT",
+  "author": "sirnple",
+  "homepage": "https://github.com/sirnple/dsh-provider-hub#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirnple/dsh-provider-hub.git",
+    "directory": "plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/sirnple/dsh-provider-hub/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "provider",
+    "accounts",
+    "usage",
+    "oauth",
+    "grok"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.1"
   }
 }

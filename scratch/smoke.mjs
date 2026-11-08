@@ -95,7 +95,7 @@ globalThis.window = { __ModuleLoader__: { load(def) { definition = def } } }
 const moduleUrl = pathToFileURL(CLIENT).href + `?t=${Date.now()}`
 await import(moduleUrl)
 check(definition !== undefined, 'client module registered a loader definition')
-check(definition?.id === 'dsh-provider-hub', 'loader id is dsh-provider-hub', definition?.id)
+check(definition?.id === '@sirnple/dsh-provider-hub', 'loader id is the scoped package name', definition?.id)
 
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0))
 const flush = async (rounds = 6) => { for (let i = 0; i < rounds; i += 1) await tick() }
