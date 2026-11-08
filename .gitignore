@@ -21,3 +21,7 @@ scratch/*
 !scratch/check-pu-classes.mjs
 !scratch/index.testable.mjs
 !scratch/fix-grok-import.mjs
+
+# local release staging / packed bundles
+.release/
+*.tgz
