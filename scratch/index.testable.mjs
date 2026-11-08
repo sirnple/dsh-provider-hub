@@ -375,6 +375,9 @@ function pruneUsage() {
     balances[key] = {
       kind: String(raw.kind ?? ''),
       ok: raw.ok === true,
+      // Keep the shape version: dropping it here makes every entry look outdated
+      // after a restart, which would re-probe on every single usage read.
+      version: typeof raw.version === 'number' && Number.isFinite(raw.version) ? raw.version : 0,
       fetchedAt,
       fields: Array.isArray(raw.fields)
         ? raw.fields.filter((field) => field !== null && typeof field === 'object').slice(0, 16).map((field) => ({ key: String(field.key ?? ''), value: String(field.value ?? '') }))
@@ -909,7 +912,7 @@ async function testAccountKey(ctx, config, providerId, ref) {
 
   const key = usageKey(provider.id, account.ref)
   const record = (ok, fields, meters, error) => {
-    usage.balances[key] = { kind, ok, fetchedAt: Date.now(), fields, meters, error }
+    usage.balances[key] = { kind, ok, version: BALANCE_SHAPE_VERSION, fetchedAt: Date.now(), fields, meters, error }
     usageDirty = true
     saveUsage()
   }

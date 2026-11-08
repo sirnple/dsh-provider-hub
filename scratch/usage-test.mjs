@@ -274,7 +274,18 @@ async function readSnapshot(host) {
     const usageCalls = seen.filter((call) => call.target.includes('/zen/go/v1/usage'))
     assert.ok(usageCalls.length >= 1, 'usage endpoint probed')
     assert.equal(usageCalls[0].authorization, 'Bearer sk-not-real', 'credential forwarded as a bearer token')
+    // The shape version is what lets a newer Host repair an old entry exactly
+    // once; pruning must not drop it.
+    const ledger = JSON.parse(readFileSync(`${ROOT}/tmp-home-usage-7/storages/provider-accounts/usage.json`, 'utf8'))
+    assert.equal(ledger.balances[key].version, 2, 'the probe stores the balance shape version')
     host.disposers.forEach((dispose) => dispose())
+
+    // Re-reading through a fresh module (a restart) keeps the version, so the
+    // snapshot does not look outdated.
+    const reloaded = await makeHost(`${ROOT}/tmp-home-usage-7`, { balanceKind: 'opencode-zen' })
+    const snapshot = await readSnapshot(reloaded)
+    assert.equal(snapshot.balances[key].version, 2, 'a reload keeps the balance shape version')
+    reloaded.disposers.forEach((dispose) => dispose())
     console.log('ok 7 OpenCode adapter maps usage, dollars and balance')
   } finally {
     globalThis.fetch = realFetch
