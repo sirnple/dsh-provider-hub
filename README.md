@@ -38,6 +38,8 @@ dsh plugin --profile desktop add https://github.com/sirnple/dsh-provider-hub/rel
 宿主需要 `@deepseek-ai/schemastery`（peer dependency，profile 里通常已有）。设置命名空间是 Loader 行 id
 `provider-accounts`，与包名无关，所以改包名不会丢已有配置。
 
+## 界面
+
 
 - **设置 → 模型提供商与账号**：提供商卡片、账号行（密钥、配额条、今日用量）、添加提供商（目录 / 自定义端点 / Grok Build 登录）
 - **设置 → 用量与余额**（会话头部胶囊同一份数据）：逐提供商分块，逐账号一行
