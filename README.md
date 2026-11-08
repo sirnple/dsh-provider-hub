@@ -20,16 +20,24 @@ per provider, one-click switching, quota-driven failover, and a per-account usag
 
 ## 安装
 
-```powershell
-# 把仓库链接进某个 profile
-#   <profile>/package.json
-#     "dsh-provider-hub": "link:C:/path/to/dsh-provider-hub/plugin"
-#   <profile>/dsh.profile.bundles 里加入 "dsh-provider-hub"
+```sh
+# 1) 从 npm（预构建，免构建授权）
+dsh plugin --profile desktop add @sirnple/dsh-provider-hub
+
+# 2) 或从 GitHub Release 的预构建 tarball
+dsh plugin --profile desktop add https://github.com/sirnple/dsh-provider-hub/releases/latest/download/dsh-provider-hub.tgz
 ```
 
-宿主需要 `@deepseek-ai/schemastery`（peer dependency，profile 里通常已有）。
+本地开发用 `link:` 指向本仓库的 `plugin/` 目录：
 
-## 界面
+```
+<profile>/package.json  →  "@sirnple/dsh-provider-hub": "link:C:/path/to/dsh-provider-hub/plugin"
+<profile>/dsh.profile.bundles  →  "@sirnple/dsh-provider-hub"
+```
+
+宿主需要 `@deepseek-ai/schemastery`（peer dependency，profile 里通常已有）。设置命名空间是 Loader 行 id
+`provider-accounts`，与包名无关，所以改包名不会丢已有配置。
+
 
 - **设置 → 模型提供商与账号**：提供商卡片、账号行（密钥、配额条、今日用量）、添加提供商（目录 / 自定义端点 / Grok Build 登录）
 - **设置 → 用量与余额**（会话头部胶囊同一份数据）：逐提供商分块，逐账号一行
