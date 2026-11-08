@@ -1,5 +1,5 @@
 import fs from "node:fs"
-const file = "C:/Users/Administrator/repos/dsh-provider-accounts/scratch/usage-dom.mjs"
+const file = "C:/Users/Administrator/repos/dsh-provider-hub/scratch/usage-dom.mjs"
 let s = fs.readFileSync(file, "utf8")
 const anchor = "globalThis.setInterval = realSetInterval\n"
 const n = s.split(anchor).length - 1

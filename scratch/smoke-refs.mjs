@@ -3,7 +3,7 @@ import { createRequire } from 'node:module'
 import { pathToFileURL } from 'node:url'
 import { JSDOM } from 'jsdom'
 
-const CLIENT = 'C:\\Users\\Administrator\\repos\\dsh-provider-accounts\\plugin\\client.js'
+const CLIENT = 'C:\\Users\\Administrator\\repos\\dsh-provider-hub\\plugin\\client.js'
 const dom = new JSDOM('<!doctype html><html><body><div id="root"></div></body></html>', { url: 'http://127.0.0.1:55099/' })
 const { window } = dom
 for (const key of ['window', 'document', 'HTMLElement', 'HTMLInputElement', 'HTMLButtonElement', 'Node', 'Element', 'Event', 'MouseEvent', 'KeyboardEvent', 'getComputedStyle', 'requestAnimationFrame', 'cancelAnimationFrame', 'localStorage']) {

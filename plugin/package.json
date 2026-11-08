@@ -1,5 +1,5 @@
 {
-  "name": "dsh-provider-accounts",
+  "name": "dsh-provider-hub",
   "version": "1.0.0",
   "private": true,
   "description": "Model provider & account manager for DeepSeek Harness: onboard third-party providers, keep several API-key accounts per provider, switch the active one, and fail over automatically on quota errors.",

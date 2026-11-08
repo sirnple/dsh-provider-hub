@@ -7,7 +7,7 @@ import assert from 'node:assert/strict'
 import { rmSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 
-const ROOT = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch'
+const ROOT = 'C:/Users/Administrator/repos/dsh-provider-hub/scratch'
 process.env.DSH_HOME = `${ROOT}/tmp-home-contract`
 rmSync(process.env.DSH_HOME, { recursive: true, force: true })
 const moduleUrl = pathToFileURL(`${ROOT}/index.testable.mjs`).href + `?case=${Date.now()}`

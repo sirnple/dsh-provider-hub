@@ -8,20 +8,20 @@ No live profile file was modified.
 
 | What | Where |
 |---|---|
-| Extracted DSH packages | `C:\Users\Administrator\repos/dsh-provider-accounts/asar\dsh\node_modules\@deepseek-ai\<pkg>\lib\…` (referred to below as `@deepseek-ai/<pkg>`) |
+| Extracted DSH packages | `C:\Users\Administrator\repos/dsh-provider-hub/asar\dsh\node_modules\@deepseek-ai\<pkg>\lib\…` (referred to below as `@deepseek-ai/<pkg>`) |
 | Active profile patch (the file the Models page writes) | `C:\Users\Administrator\.dsh\profiles\desktop\cordis.patch.yml` |
 | pi-ai package | **not** in the extraction tree originally — it is packed inside `…\resources\app.asar` |
 | Local credential store | `C:\Users\Administrator\.dsh\.credentials.yaml` (refs + records; not read here on purpose) |
 | Adapter version | `@deepseek-ai/dsh-llm-pi-ai/package.json` → `0.2.1-rc.2`, dep `@earendil-works/pi-ai: ^1.1.0` |
 
-**Getting pi-ai.** `app.asar` is a plain Electron asar; the repo already has a 47-line reader at `C:\Users\Administrator\repos/dsh-provider-accounts/asar.mjs`.
+**Getting pi-ai.** `app.asar` is a plain Electron asar; the repo already has a 47-line reader at `C:\Users\Administrator\repos/dsh-provider-hub/asar.mjs`.
 I extracted only that subtree into the existing tree (246 files):
 
 ```powershell
-cd C:\Users\Administrator\repos/dsh-provider-accounts
+cd C:\Users\Administrator\repos/dsh-provider-hub
 node asar.mjs list    "<…>\resources\app.asar" "@earendil-works/pi-ai"          # 246 entries
-node asar.mjs extract "<…>\resources\app.asar" C:\Users\Administrator\repos/dsh-provider-accounts/asar "@earendil-works/pi-ai"
-# → C:\Users\Administrator\repos/dsh-provider-accounts/asar\dsh\node_modules\@earendil-works\pi-ai\
+node asar.mjs extract "<…>\resources\app.asar" C:\Users\Administrator\repos/dsh-provider-hub/asar "@earendil-works/pi-ai"
+# → C:\Users\Administrator\repos/dsh-provider-hub/asar\dsh\node_modules\@earendil-works\pi-ai\
 ```
 
 (`js-yaml` was extracted the same way, to validate the generated YAML.) Anyone reproducing this needs `@earendil-works/pi-ai/dist/providers/data/*.json` — that is where endpoint, protocol and model catalog actually live.
@@ -632,14 +632,14 @@ Do **not** use it as a universal key check: for `opencode-go` (catalog) it short
 
 ## 10. Verification performed
 
-1. Extracted `@earendil-works/pi-ai` and `js-yaml` from `app.asar` (read-only on DSH config; files added under `repos/dsh-provider-accounts/asar\`).
+1. Extracted `@earendil-works/pi-ai` and `js-yaml` from `app.asar` (read-only on DSH config; files added under `repos/dsh-provider-hub/asar\`).
 2. Generated the three account-2 routes mechanically from `data/opencode-go.json` (`research/gen-account-routes.mjs`), then:
    - validated the object with the adapter's **own** `Config` schema (the package exports it: `index.js` tail → `export { Config, PiAiAdapter, apply, inject, name, recordKeyFor, supportedProtocols }`) — accepted all 3 routes;
    - asserted per-model **reasoning-level-set equality** against pi-ai's `getSupportedThinkingLevels` — `level-set mismatches: none` (30/30 models);
    - checked the credential grammars: `isCredentialKeySegment("opencode-go-2") === true`, `credentialRef("OPENCODE_GO_2_API_KEY")` OK, `credentialRef("opencode-go-2")` rejected.
 3. Emitted `opencode-go-accounts.yaml`, re-parsed it with `js-yaml`, re-ran `Config(…)` on the parsed YAML, and deep-compared each generated model list (`research/verify-accounts-yaml.mjs`) — all three routes: `models match generated JSON = true`.
 
-Artifacts in `C:\Users\Administrator\repos/dsh-provider-accounts/research\`:
+Artifacts in `C:\Users\Administrator\repos/dsh-provider-hub/research\`:
 
 | File | What |
 |---|---|

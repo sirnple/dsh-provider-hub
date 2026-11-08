@@ -1,5 +1,5 @@
 import fs from "node:fs"
-const file = "C:/Users/Administrator/repos/dsh-provider-accounts/scratch/grok-test.mjs"
+const file = "C:/Users/Administrator/repos/dsh-provider-hub/scratch/grok-test.mjs"
 let s = fs.readFileSync(file, "utf8")
 const a = `// ---------------------------------------------------------------- 1. adapter
 {

@@ -2,8 +2,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const DSH = 'C:/Users/Administrator/repos/dsh-provider-accounts/asar/dsh/node_modules/@deepseek-ai'
-const PIAI_ROOT = 'C:/Users/Administrator/repos/dsh-provider-accounts/asar/dsh/node_modules/@earendil-works/pi-ai'
+const DSH = 'C:/Users/Administrator/repos/dsh-provider-hub/asar/dsh/node_modules/@deepseek-ai'
+const PIAI_ROOT = 'C:/Users/Administrator/repos/dsh-provider-hub/asar/dsh/node_modules/@earendil-works/pi-ai'
 const CATALOG = path.join(PIAI_ROOT, 'dist/providers/data/opencode-go.json')
 const fileUrl = (p) => new URL('file:///' + p.replace(/\\/g, '/')).href
 
@@ -122,4 +122,4 @@ for (const ref of ['OPENCODE_GO_2_API_KEY', 'opencode-go-2']) {
 if (dropped.size > 0) console.log('withheld compat dropped:', [...dropped].map(([f, s]) => `${f} (${[...s].join(',')})`).join(' | '))
 console.log('level-set mismatches:', mismatches.length === 0 ? 'none' : mismatches.join(' ; '))
 console.log(report.join('\n'))
-fs.writeFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/research/account-routes.json', JSON.stringify(routes, null, 2))
+fs.writeFileSync('C:/Users/Administrator/repos/dsh-provider-hub/research/account-routes.json', JSON.stringify(routes, null, 2))

@@ -1,4 +1,4 @@
-# dsh-provider-accounts · 模型提供商与账号
+# dsh-provider-hub · 模型提供商与账号
 
 A DeepSeek Harness bundle that adds two pages to Settings:
 
@@ -169,7 +169,7 @@ are lower than the official CLI's. Multi-account is one bundle per harness profi
 
 ```yaml
 - id: provider-accounts
-  name: dsh-provider-accounts
+  name: dsh-provider-hub
   config:
     providers:
       - id: opencode-go          # pi-ai route id; also the route written to llm-pi-ai

@@ -1,5 +1,5 @@
 import fs from "node:fs"
-const file = "C:/Users/Administrator/repos/dsh-provider-accounts/scratch/grok-test.mjs"
+const file = "C:/Users/Administrator/repos/dsh-provider-hub/scratch/grok-test.mjs"
 let s = fs.readFileSync(file, "utf8")
 const once = (a, b, label) => { const n = s.split(a).length - 1; if (n !== 1) throw new Error(label + ": " + n); s = s.replace(a, b); console.log("ok:", label) }
 

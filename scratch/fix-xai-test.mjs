@@ -1,5 +1,5 @@
 import fs from "node:fs"
-const file = "C:/Users/Administrator/repos/dsh-provider-accounts/scratch/xai-test.mjs"
+const file = "C:/Users/Administrator/repos/dsh-provider-hub/scratch/xai-test.mjs"
 let s = fs.readFileSync(file, "utf8")
 const a = `  const got = await collect(host.streamListeners[0].listener(options, () => (async function* () { for (const chunk of chunks) yield chunk })()))`
 const b = `  const raw = () => (async function* () { for (const chunk of chunks) yield chunk })()

@@ -1,5 +1,5 @@
 const fs = require('node:fs')
-const source = fs.readFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/plugin/client.js', 'utf8')
+const source = fs.readFileSync('C:/Users/Administrator/repos/dsh-provider-hub/plugin/client.js', 'utf8')
 
 function dictKeys(name) {
   const start = source.indexOf(`const ${name} = {`)

@@ -9,7 +9,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 const require = createRequire(import.meta.url)
-const CLIENT = 'C:\\Users\\Administrator\\repos\\dsh-provider-accounts\\plugin\\client.js'
+const CLIENT = 'C:\\Users\\Administrator\\repos\\dsh-provider-hub\\plugin\\client.js'
 const NS = 'provider-accounts'
 const PI = 'llm-pi-ai'
 
@@ -95,7 +95,7 @@ globalThis.window = { __ModuleLoader__: { load(def) { definition = def } } }
 const moduleUrl = pathToFileURL(CLIENT).href + `?t=${Date.now()}`
 await import(moduleUrl)
 check(definition !== undefined, 'client module registered a loader definition')
-check(definition?.id === 'dsh-provider-accounts', 'loader id is dsh-provider-accounts', definition?.id)
+check(definition?.id === 'dsh-provider-hub', 'loader id is dsh-provider-hub', definition?.id)
 
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0))
 const flush = async (rounds = 6) => { for (let i = 0; i < rounds; i += 1) await tick() }

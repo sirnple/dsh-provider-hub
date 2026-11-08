@@ -1,5 +1,5 @@
 import fs from "node:fs"
-const file = "C:/Users/Administrator/repos/dsh-provider-accounts/scratch/usage-dom.mjs"
+const file = "C:/Users/Administrator/repos/dsh-provider-hub/scratch/usage-dom.mjs"
 let s = fs.readFileSync(file, "utf8")
 const a = "  check(page.pill?.querySelectorAll('.pa-hudBar').length === 6, 'the collapsed pill still draws both providers as bars', String(page.pill?.querySelectorAll('.pa-hudBar').length))"
 const b = "  check(page.pill?.querySelectorAll('.pa-hudBar').length === 3, 'the collapsed pill draws one bar per window of the quota-bearing provider', String(page.pill?.querySelectorAll('.pa-hudBar').length))"

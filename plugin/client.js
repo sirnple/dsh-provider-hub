@@ -16,7 +16,7 @@
  * with every class prefixed `pa-` (the providers page) or `pu-` (usage).
  */
 window.__ModuleLoader__.load({
-	id: 'dsh-provider-accounts',
+	id: 'dsh-provider-hub',
 	factory(require) {
 		const React = require('react')
 		const h = React.createElement
@@ -316,10 +316,10 @@ select.pa-input{cursor:pointer;max-width:240px}
 .pu-gaugeFillWarn{background:var(--dsw-alias-state-warn-label)}
 .pu-gaugeFillDanger{background:var(--dsw-alias-state-error-primary)}
 `
-		const CSS_TAG_ID = 'dsh-provider-accounts/client.css'
+		const CSS_TAG_ID = 'dsh-provider-hub/client.css'
 		if (typeof document !== 'undefined' && document.querySelector('style[data-plugin-css=' + JSON.stringify(CSS_TAG_ID) + ']') === null) {
 			const tag = document.createElement('style')
-			tag.dataset.plugin = 'dsh-provider-accounts'
+			tag.dataset.plugin = 'dsh-provider-hub'
 			tag.dataset.pluginCss = CSS_TAG_ID
 			tag.textContent = CSS
 			document.head.appendChild(tag)

@@ -1,6 +1,6 @@
-# Design: dsh-provider-accounts
+# Design: dsh-provider-hub
 
-Bundle: `dsh-provider-accounts` — "模型提供商与账号 / Model Providers & Accounts".
+Bundle: `dsh-provider-hub` — "模型提供商与账号 / Model Providers & Accounts".
 Settings page in the Web client + Host reconciler + quota failover.
 
 ## Why this shape

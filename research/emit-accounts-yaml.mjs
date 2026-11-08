@@ -1,7 +1,7 @@
 // Emit the generated routes as paste-ready YAML matching the patch file style.
 import fs from 'node:fs'
 
-const routes = JSON.parse(fs.readFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/research/account-routes.json', 'utf8'))
+const routes = JSON.parse(fs.readFileSync('C:/Users/Administrator/repos/dsh-provider-hub/research/account-routes.json', 'utf8'))
 const order = ['opencode-go-2', 'opencode-go-2-completions', 'opencode-go-2-responses']
 
 const scalar = (v) => {
@@ -45,6 +45,6 @@ for (const id of order) {
   out.push('      ' + id + ':')
   emit(routes[id], 8, out)
 }
-fs.writeFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/research/tmp-routes.yaml', out.join('\n') + '\n')
+fs.writeFileSync('C:/Users/Administrator/repos/dsh-provider-hub/research/tmp-routes.yaml', out.join('\n') + '\n')
 console.log(out.slice(0, 30).join('\n'))
 console.log('... lines total', out.length)

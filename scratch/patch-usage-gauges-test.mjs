@@ -1,7 +1,7 @@
 // Extend the Host usage harness with the structured gauge assertions.
 import fs from 'node:fs'
 
-const FILE = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch/usage-test.mjs'
+const FILE = 'C:/Users/Administrator/repos/dsh-provider-hub/scratch/usage-test.mjs'
 let source = fs.readFileSync(FILE, 'utf8')
 const MARKER = `    assert.equal(fields.weeklyReset, '2026-10-27T00:00:00.000Z')`
 if (source.includes('gauge fiveHour')) {

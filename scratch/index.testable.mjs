@@ -1,5 +1,5 @@
 /**
- * Host half of the `dsh-provider-accounts` bundle — "模型提供商与账号".
+ * Host half of the `dsh-provider-hub` bundle — "模型提供商与账号".
  *
  * The browser page keeps providers and their accounts in this plugin's settings
  * namespace; here we declare that namespace, keep the generic settings form off,
@@ -17,13 +17,13 @@
  * persisted to `$DSH_HOME/storages/provider-accounts/usage.json` and served to
  * the page by two exact Fetch routes on the authenticated `/api` bridge.
  *
- * @module dsh-provider-accounts
+ * @module dsh-provider-hub
  */
 
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
-import z from 'file:///C:/Users/Administrator/repos/dsh-provider-accounts/asar/dsh/node_modules/@deepseek-ai/schemastery/lib/index.mjs'
+import z from 'file:///C:/Users/Administrator/repos/dsh-provider-hub/asar/dsh/node_modules/@deepseek-ai/schemastery/lib/index.mjs'
 import {
   GROK_PROVIDER,
   bindGrokAdapter,
@@ -35,7 +35,7 @@ import {
   probeGrok,
   readGrokTokens,
   startGrokDevice,
-} from 'file:///C:/Users/Administrator/repos/dsh-provider-accounts/plugin/grok.js'
+} from 'file:///C:/Users/Administrator/repos/dsh-provider-hub/plugin/grok.js'
 
 /** Cordis plugin name used by Loader diagnostics. */
 export const name = 'providerAccounts'

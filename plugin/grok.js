@@ -6,7 +6,7 @@
  * service. The only state is the OAuth token bundle stored in the harness
  * credential store under `GROK_BUILD_OAUTH`.
  *
- * @module dsh-provider-accounts/grok
+ * @module dsh-provider-hub/grok
  */
 
 /** Public OAuth client of the official Grok Build CLI. */

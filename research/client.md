@@ -3,7 +3,7 @@
 Research target: a **locally authored bundle** whose browser half is a plain-JS
 `window.__ModuleLoader__.load({ id, factory(require) {...} })` module that registers one
 `settings.section` page. All findings below were read out of the installed 0.2.1-rc.2 packages
-under `C:\Users\Administrator\repos/dsh-provider-accounts/asar\dsh\node_modules\@deepseek-ai\` (abbreviated
+under `C:\Users\Administrator\repos/dsh-provider-hub/asar\dsh\node_modules\@deepseek-ai\` (abbreviated
 `$PKG` in citations) plus the built Web shell
 `$PKG\dsh-web-frontend\dist\assets\index-CN7NIWNw.js` (one minified line; cited by **byte
 offset**, `@off`). Read-only investigation: nothing was installed, enabled, or edited.

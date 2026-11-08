@@ -2,7 +2,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const DIST = 'C:/Users/Administrator/repos/dsh-provider-accounts/asar/dsh/node_modules/@earendil-works/pi-ai/dist'
+const DIST = 'C:/Users/Administrator/repos/dsh-provider-hub/asar/dsh/node_modules/@earendil-works/pi-ai/dist'
 const envSrc = fs.readFileSync(path.join(DIST, 'env-api-keys.js'), 'utf8')
 const envMap = {}
 for (const match of envSrc.matchAll(/^\s*(?:"([^"]+)"|([A-Za-z0-9_-]+)):\s*"([^"]+)"/gm)) {
@@ -20,6 +20,6 @@ for (const file of files) {
   list.push({ id, name, env: env ?? null })
 }
 list.sort((a, b) => a.id.localeCompare(b.id))
-fs.writeFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/research/catalog-providers.json', JSON.stringify(list, null, 2))
+fs.writeFileSync('C:/Users/Administrator/repos/dsh-provider-hub/research/catalog-providers.json', JSON.stringify(list, null, 2))
 console.log(`${list.length} catalog providers`)
 console.log(list.map((p) => `${p.id} | ${p.name} | ${p.env ?? '-'}`).join('\n'))

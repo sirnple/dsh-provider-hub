@@ -2,7 +2,7 @@
 
 Read-only investigation of DSH `0.2.1-rc.2` package sources.
 
-`$P` below = `C:\Users\Administrator\repos/dsh-provider-accounts/asar\dsh\node_modules\@deepseek-ai`
+`$P` below = `C:\Users\Administrator\repos/dsh-provider-hub/asar\dsh\node_modules\@deepseek-ai`
 (all paths are relative to `$P`; `pkg/lib/x.js:12` means `$P\pkg\lib\x.js` line 12).
 
 Profile under study: `C:\Users\Administrator\.dsh\profiles\desktop` — bundles `@deepseek-ai/dsh-base`,

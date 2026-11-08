@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import assert from 'node:assert/strict'
 import { rmSync } from 'node:fs'
 
-const ROOT = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch'
+const ROOT = 'C:/Users/Administrator/repos/dsh-provider-hub/scratch'
 process.env.DSH_HOME = `${ROOT}/tmp-grok`
 rmSync(process.env.DSH_HOME, { recursive: true, force: true })
 

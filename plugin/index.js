@@ -1,5 +1,5 @@
 /**
- * Host half of the `dsh-provider-accounts` bundle — "模型提供商与账号".
+ * Host half of the `dsh-provider-hub` bundle — "模型提供商与账号".
  *
  * The browser page keeps providers and their accounts in this plugin's settings
  * namespace; here we declare that namespace, keep the generic settings form off,
@@ -17,7 +17,7 @@
  * persisted to `$DSH_HOME/storages/provider-accounts/usage.json` and served to
  * the page by two exact Fetch routes on the authenticated `/api` bridge.
  *
- * @module dsh-provider-accounts
+ * @module dsh-provider-hub
  */
 
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
