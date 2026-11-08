@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict'
 
 // Keep the ledger of the production home untouched while the harness runs.
-process.env.DSH_HOME = 'C:/Users/Administrator/repos/dshx/scratch/tmp-home'
+process.env.DSH_HOME = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch/tmp-home'
 
 /** Disposers of every fake host, so interval cleanup keeps Node alive only while testing. */
 const ALL_DISPOSERS = []

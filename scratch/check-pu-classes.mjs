@@ -4,7 +4,7 @@
 // scratch/check-client-css.cjs; this covers the sibling prefix it ignores.
 import { readFileSync } from 'node:fs'
 
-const source = readFileSync('C:/Users/Administrator/repos/dshx/plugin/client.js', 'utf8')
+const source = readFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/plugin/client.js', 'utf8')
 const cssStart = source.indexOf('const CSS = `')
 const cssEnd = source.indexOf('`\n\t\tconst CSS_TAG_ID', cssStart)
 const css = source.slice(cssStart, cssEnd)

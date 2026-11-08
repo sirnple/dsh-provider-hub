@@ -3,8 +3,8 @@
 // that the provider rejects. Add a Host probe route and make the page use it.
 import fs from 'node:fs'
 
-const HOST = 'C:/Users/Administrator/repos/dshx/plugin/index.js'
-const CLIENT = 'C:/Users/Administrator/repos/dshx/plugin/client.js'
+const HOST = 'C:/Users/Administrator/repos/dsh-provider-accounts/plugin/index.js'
+const CLIENT = 'C:/Users/Administrator/repos/dsh-provider-accounts/plugin/client.js'
 const done = []
 function patch(file, search, replacement, label) {
   let source = fs.readFileSync(file, 'utf8')

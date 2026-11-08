@@ -1,5 +1,5 @@
 import fs from "node:fs"
-const file = "C:/Users/Administrator/repos/dshx/scratch/usage-dom.mjs"
+const file = "C:/Users/Administrator/repos/dsh-provider-accounts/scratch/usage-dom.mjs"
 let s = fs.readFileSync(file, "utf8")
 const anchor = "  check(page.container.querySelector('.pa-hudPanel') !== null, 'the panel renders in a portal')"
 const add = `  check(!/[0-9]/.test(page.pill?.textContent ?? ''), 'the collapsed pill shows no numeric percentage', page.pill?.textContent)

@@ -5,7 +5,7 @@
 import assert from 'node:assert/strict'
 import { rmSync } from 'node:fs'
 
-const ROOT = 'C:/Users/Administrator/repos/dshx/scratch'
+const ROOT = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch'
 const moduleUrl = new URL('index.testable.mjs', import.meta.url).href
 let sequence = 0
 async function freshModules() {

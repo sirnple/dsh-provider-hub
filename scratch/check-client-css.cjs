@@ -1,5 +1,5 @@
 const fs = require('node:fs')
-const source = fs.readFileSync('C:/Users/Administrator/repos/dshx/plugin/client.js', 'utf8')
+const source = fs.readFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/plugin/client.js', 'utf8')
 
 const cssStart = source.indexOf('const CSS = `')
 const cssEnd = source.indexOf('`\n\t\tconst CSS_TAG_ID', cssStart)

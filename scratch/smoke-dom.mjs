@@ -4,7 +4,7 @@ import { createRequire } from 'node:module'
 import { pathToFileURL } from 'node:url'
 import { JSDOM } from 'jsdom'
 
-const CLIENT = 'C:\\Users\\Administrator\\repos\\dshx\\plugin\\client.js'
+const CLIENT = 'C:\\Users\\Administrator\\repos\\dsh-provider-accounts\\plugin\\client.js'
 const NS = 'provider-accounts'
 const PI = 'llm-pi-ai'
 

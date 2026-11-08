@@ -1,7 +1,7 @@
 // Extend the DOM harness with the new per-provider account switcher.
 import fs from 'node:fs'
 
-const FILE = 'C:/Users/Administrator/repos/dshx/scratch/smoke-dom.mjs'
+const FILE = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch/smoke-dom.mjs'
 let source = fs.readFileSync(FILE, 'utf8')
 const anchor = `// 4. add-provider dialog lists catalog presets`
 if (!source.includes(anchor)) throw new Error('anchor not found')

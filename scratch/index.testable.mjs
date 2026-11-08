@@ -23,7 +23,7 @@
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
-import z from 'file:///C:/Users/Administrator/repos/dshx/asar/dsh/node_modules/@deepseek-ai/schemastery/lib/index.mjs'
+import z from 'file:///C:/Users/Administrator/repos/dsh-provider-accounts/asar/dsh/node_modules/@deepseek-ai/schemastery/lib/index.mjs'
 import {
   GROK_PROVIDER,
   bindGrokAdapter,
@@ -35,7 +35,7 @@ import {
   probeGrok,
   readGrokTokens,
   startGrokDevice,
-} from 'file:///C:/Users/Administrator/repos/dshx/plugin/grok.js'
+} from 'file:///C:/Users/Administrator/repos/dsh-provider-accounts/plugin/grok.js'
 
 /** Cordis plugin name used by Loader diagnostics. */
 export const name = 'providerAccounts'

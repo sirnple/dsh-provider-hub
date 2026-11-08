@@ -9,7 +9,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 const require = createRequire(import.meta.url)
-const CLIENT = 'C:\\Users\\Administrator\\repos\\dshx\\plugin\\client.js'
+const CLIENT = 'C:\\Users\\Administrator\\repos\\dsh-provider-accounts\\plugin\\client.js'
 const NS = 'provider-accounts'
 const PI = 'llm-pi-ai'
 

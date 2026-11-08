@@ -2,7 +2,7 @@
 // the prepaid chip, and no provider-name text that could overflow a narrow header.
 import fs from 'node:fs'
 
-const FILE = 'C:/Users/Administrator/repos/dshx/scratch/usage-dom.mjs'
+const FILE = 'C:/Users/Administrator/repos/dsh-provider-accounts/scratch/usage-dom.mjs'
 let source = fs.readFileSync(FILE, 'utf8')
 const anchor = `check(container.querySelector('.pa-hudPanel') !== null, 'the panel renders in a portal')`
 if (!source.includes(anchor)) throw new Error('anchor not found')

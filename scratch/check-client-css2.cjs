@@ -1,5 +1,5 @@
 const fs = require('node:fs')
-const source = fs.readFileSync('C:/Users/Administrator/repos/dshx/plugin/client.js', 'utf8')
+const source = fs.readFileSync('C:/Users/Administrator/repos/dsh-provider-accounts/plugin/client.js', 'utf8')
 const start = source.indexOf('const CSS = `')
 const end = source.indexOf('`', start + 14)
 const css = source.slice(start, end)
