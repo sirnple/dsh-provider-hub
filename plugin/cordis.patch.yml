@@ -1,0 +1,5 @@
+# Provider & account manager. Inserts only our own row; every existing DSH
+# component keeps its own configuration and lifecycle.
+- insert:
+    - id: provider-accounts
+      name: dsh-provider-accounts

@@ -1,0 +1,23 @@
+node_modules/
+asar/
+asar-full/
+*.log
+.DS_Store
+
+# The harness directory is a workspace: only the suites and their fixtures are
+# tracked, the one-off patch/scratch scripts stay local.
+scratch/*
+!scratch/*-test.mjs
+!scratch/smoke.mjs
+!scratch/smoke-dom.mjs
+!scratch/smoke-refs.mjs
+!scratch/client-flows.mjs
+!scratch/usage-dom.mjs
+!scratch/usage-contract.mjs
+!scratch/refresh-harness.mjs
+!scratch/check-client-dicts.cjs
+!scratch/check-client-css.cjs
+!scratch/check-client-css2.cjs
+!scratch/check-pu-classes.mjs
+!scratch/index.testable.mjs
+!scratch/fix-grok-import.mjs

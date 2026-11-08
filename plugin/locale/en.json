@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Providers & Accounts",
+    "description": "Onboard third-party model providers, hold several API-key accounts for one provider, switch the account a request uses, fail over automatically when a quota runs out, and watch per-account usage, quota and balance."
+  }
+}

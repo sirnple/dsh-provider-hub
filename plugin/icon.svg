@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Providers and accounts">
+  <defs>
+    <linearGradient id="pa-bg" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3b6df6"/>
+      <stop offset="1" stop-color="#1b2f8c"/>
+    </linearGradient>
+    <linearGradient id="pa-key" x1="20" y1="18" x2="46" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dbe4ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#pa-bg)"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.42" stroke-width="2" stroke-linecap="round">
+    <path d="M15 44 L24 33"/>
+    <path d="M49 44 L40 33"/>
+    <path d="M15 20 L24 27"/>
+    <path d="M49 20 L40 27"/>
+  </g>
+  <g fill="#ffffff" fill-opacity="0.9">
+    <circle cx="14" cy="45" r="3.2"/>
+    <circle cx="50" cy="45" r="3.2"/>
+    <circle cx="14" cy="19" r="3.2"/>
+    <circle cx="50" cy="19" r="3.2"/>
+  </g>
+  <circle cx="32" cy="28" r="8.5" fill="none" stroke="url(#pa-key)" stroke-width="4.4"/>
+  <path d="M32 36.5 L32 47 M32 47 L27.5 51.5 M37 45.5 L32 47" fill="none" stroke="url(#pa-key)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
