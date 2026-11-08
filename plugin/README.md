@@ -158,6 +158,19 @@ Prompt-cache/session affinity (`x-grok-session-id`, `prompt_cache_key`), reasoni
 gateway compaction and video generation are not implemented; requests are stateless, so cache hits
 are lower than the official CLI's. Multi-account is one bundle per harness profile.
 
+## Renaming the package
+
+The settings namespace is the **Loader entry id** (`provider-accounts` in `cordis.patch.yml`), not
+the package name, so package renames do not touch stored configuration. Two places do hold the
+package name and both must move together, or the Host half stops resolving and the page reads an
+empty provider list:
+
+1. `<profile>/package.json` — the `link:` dependency and the `dsh.profile.bundles` entry.
+2. `<profile>/cordis.patch.yml` — the row that carries the stored `providers`/`accounts` config,
+   whose `name:` must match `package.json#name`.
+
+Keep the row `id` unchanged; changing it orphans every saved provider.
+
 ## Where things live
 
 | Thing | Location |
