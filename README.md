@@ -48,7 +48,7 @@ key 今天用了多少、哪个账号还有额度。这个插件把「提供商 
 插件不发明新的登录方式，只是在 DSH 已有的两种凭据上加了一层「多账号 + 归属」：
 
 - **API Key（默认）** —— 目录提供商与自定义端点都用它。凭据存在 DSH 的 credential store，插件只保存引用名（如 `OPENCODE_GO_API_KEY_1`），不落明文。
-- **OAuth（内置 Grok Build）** —— xAI 的 Grok Build / SuperGrok 订阅按 OAuth 记账，不吃 API credits，用 API Key 走不通。插件自己完成设备码登录与 token 轮替，并把 Build 的 Responses 协议翻译成 DSH 的流式事件，因此**不需要 grok2api 之类的本地网关**。详见 [plugin/README.md](plugin/README.md#grok-build-native-oauth)。
+- **OAuth（内置 Grok Build；WorkBuddy 走本地网关）** —— xAI 的 Grok Build / SuperGrok 订阅按 OAuth 记账，不吃 API credits，用 API Key 走不通。插件自己完成设备码登录与 token 轮替，并把 Build 的 Responses 协议翻译成 DSH 的流式事件，因此**不需要 grok2api 之类的本地网关**。详见 [plugin/README.md](plugin/README.md#grok-build-native-oauth)。WorkBuddy 相反：私有协议交给本地网关，插件只消费它的 OpenAI 兼容端点（见下节）。
 
 其余提供商若将来也需要订阅制 OAuth，按同样的形状加一个适配器即可（`plugin/grok.js` 是参考实现）。
 
@@ -61,6 +61,30 @@ key 今天用了多少、哪个账号还有额度。这个插件把「提供商 
 - **码道（CodeArts Agent）** —— 订阅制 IDE 产品（个人体验版免费，可升级套餐），登录走华为云账号浏览器 SSO。它**没有公开 API**：模型调用由本地 AgentKernel 经 `snapengine-apig.cn-north-7.myhuaweicloud.com` 用 `X-Auth-Token`（IAM 临时令牌）发起。要把它接进来只能复制官方客户端的请求，令牌约 24 小时过期且没有免密的刷新路径——插件不会存你的账号密码，所以这条路目前不做内置适配。
 
 实测记录（2026-11）：`GET https://api-ap-southeast-1.modelarts-maas.com/v1/models` 返回 401（端点存在，缺 Key）；`cn-north-4` / `cn-south-1` 域名在本机不解析，按控制台给的区域域名填写即可。
+
+## WorkBuddy（腾讯）
+
+WorkBuddy / CodeBuddy 是订阅制桌面端，模型调用走私有协议（上游 `https://copilot.tencent.com`），
+凭的是登录态里的 access token + refresh token，**没有公开 API**。社区已有维护中的转换网关
+[workbuddy2api](https://github.com/syh0119/workbuddy2api)：本地起一个 OpenAI 兼容服务，把账号里的
+模型（DeepSeek / Kimi / GLM / 混元 / MiniMax 等）暴露成 `/v1`，带积分看板与密钥分发。
+
+插件里已预置厂商模板：**添加提供商 → 自定义端点 → 厂商模板 → WorkBuddy（网关）**
+
+```
+端点      http://127.0.0.1:8000/v1          ← workbuddy2api 的默认地址
+协议      openai-completions
+凭据引用  WORKBUDDY_API_KEY                 ← 网关 /admin 面板里生成的密钥
+```
+
+步骤：
+
+1. 跑网关：`cp .env.example .env` → `python tools/get_token.py --write` → `python server.py`
+2. 打开 `http://127.0.0.1:8000/admin` 生成分发密钥
+3. 插件里选 WorkBuddy 模板、粘密钥、点「探测模型」（网关自带 `GET /v1/models`）
+
+为什么不内置适配：私有协议由网关维护（token 轮换、积分计费、反封号策略都在那边），在插件里重写
+一遍会随上游变化腐烂；网关对外就是标准 OpenAI 协议，多账号、换号、用量面板在本插件侧照常生效。
 
 ## 安装
 

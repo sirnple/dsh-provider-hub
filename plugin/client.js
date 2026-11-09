@@ -95,6 +95,14 @@ window.__ModuleLoader__.load({
 				ref: 'HUAWEI_MAAS_API_KEY',
 				hintKey: 'vendorHuaweiMaasHint',
 			},
+			{
+				id: 'workbuddy',
+				name: 'WorkBuddy（网关）',
+				protocol: 'openai-completions',
+				baseURL: 'http://127.0.0.1:8000/v1',
+				ref: 'WORKBUDDY_API_KEY',
+				hintKey: 'vendorWorkbuddyHint',
+			},
 		]
 
 		/** The three API protocols pi-ai accepts for a hand-declared route. */
@@ -313,6 +321,8 @@ select.pa-input{cursor:pointer;max-width:240px}
 @media (prefers-reduced-motion:reduce){.pa-thumb{transition:none}.pu-fill{transition:none}}
 .pa-grokDetail{display:flex;flex-direction:column;gap:4px;min-width:0;max-width:100%}
 .pa-grokStatus{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
+.pa-templateList{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none;min-width:0}
+.pa-templateItem{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0}
 .pa-accountUsage{display:flex;flex-direction:column;gap:2px;min-width:0;max-width:100%}
 .pa-usageMeters{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0}
 .pa-usageMeters .pu-track{width:88px}
@@ -691,6 +701,7 @@ select.pa-input{cursor:pointer;max-width:240px}
 			createRoute: 'Create route',
 			vendorTemplates: 'Vendor templates',
 			vendorHuaweiMaasHint: 'Huawei Cloud MaaS: an OpenAI-compatible endpoint plus an API key from the ModelArts console. Swap the region segment (ap-southeast-1) for the one your console shows.',
+			vendorWorkbuddyHint: 'WorkBuddy has no public API: run the workbuddy2api gateway locally, create a key in its /admin panel, then point this route at it.',
 			nativeProviderHint: 'Served by the plugin\'s built-in adapter (OAuth). No llm-pi-ai route is needed — sign in on the account below, then pick the Grok Build models.',
 			usageNav: 'Usage & balance',
 			hudTagFiveHour: '5h',
@@ -905,6 +916,7 @@ select.pa-input{cursor:pointer;max-width:240px}
 			createRoute: '创建路由',
 			vendorTemplates: '厂商模板',
 			vendorHuaweiMaasHint: '华为云 MaaS：OpenAI 兼容端点 + ModelArts 控制台创建的 API Key。把 ap-southeast-1 换成你控制台所在区域。',
+			vendorWorkbuddyHint: 'WorkBuddy 没有公开 API：本地跑 workbuddy2api 网关，在它的 /admin 面板创建密钥，再把这条路由指向该网关。',
 			nativeProviderHint: '该提供商由插件内置适配器（OAuth）直接提供，不需要 llm-pi-ai 路由。先在下方账号上登录，然后在模型选择器里选 Grok Build 分组。',
 			usageNav: '用量与余额',
 			hudTagFiveHour: '5h',
@@ -2638,15 +2650,15 @@ function usageSlice(data, providerId, account) {
 			const customBody = [
 				h('div', { key: 'templates', className: 'pa-field' },
 					h('span', { className: 'pa-label' }, t('vendorTemplates')),
-					h('div', { className: 'pa-rowActions' },
-						PROVIDER_TEMPLATES.map((template) => h('button', {
-							key: template.id,
-							type: 'button',
-							className: 'pa-btnSecondary pa-btnSmall',
-							disabled: busy,
-							onClick: () => applyTemplate(template),
-						}, template.name))),
-					h('p', { className: 'pa-hint' }, t('vendorHuaweiMaasHint'))),
+					h('ul', { className: 'pa-templateList' },
+						PROVIDER_TEMPLATES.map((template) => h('li', { key: template.id, className: 'pa-templateItem' },
+							h('button', {
+								type: 'button',
+								className: 'pa-btnSecondary pa-btnSmall',
+								disabled: busy,
+								onClick: () => applyTemplate(template),
+							}, template.name),
+							h('span', { className: 'pa-hint' }, t(template.hintKey)))))),
 				h(Field, { key: 'id', id: `${fieldId}-cid`, label: t('customId'), hint: t('customIdHint') },
 					h('input', {
 						id: `${fieldId}-cid`,
