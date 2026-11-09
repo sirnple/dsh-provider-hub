@@ -80,6 +80,23 @@ window.__ModuleLoader__.load({
 			{ id: 'nvidia', name: 'NVIDIA', env: 'NVIDIA_API_KEY' },
 			{ id: 'huggingface', name: 'Hugging Face', env: 'HF_TOKEN' },
 		]
+		/**
+		 * Vendors that speak an OpenAI-compatible API but are not in the pi-ai
+		 * catalog. Filling the form from one of these leaves the route hand-declared:
+		 * the endpoint, the protocol and the credential reference are pre-set, the key
+		 * stays the user's.
+		 */
+		const PROVIDER_TEMPLATES = [
+			{
+				id: 'huawei-maas',
+				name: '华为云 MaaS',
+				protocol: 'openai-completions',
+				baseURL: 'https://api-ap-southeast-1.modelarts-maas.com/v1',
+				ref: 'HUAWEI_MAAS_API_KEY',
+				hintKey: 'vendorHuaweiMaasHint',
+			},
+		]
+
 		/** The three API protocols pi-ai accepts for a hand-declared route. */
 		const PROTOCOLS = [
 			{ value: 'openai-completions', key: 'protocolOpenAiCompletions' },
@@ -672,6 +689,8 @@ select.pa-input{cursor:pointer;max-width:240px}
 			noAccounts: 'No account yet. Add one to store its key.',
 			providerRouteMissing: 'This provider has no llm-pi-ai route yet, so models are not offered until an account is used.',
 			createRoute: 'Create route',
+			vendorTemplates: 'Vendor templates',
+			vendorHuaweiMaasHint: 'Huawei Cloud MaaS: an OpenAI-compatible endpoint plus an API key from the ModelArts console. Swap the region segment (ap-southeast-1) for the one your console shows.',
 			nativeProviderHint: 'Served by the plugin\'s built-in adapter (OAuth). No llm-pi-ai route is needed — sign in on the account below, then pick the Grok Build models.',
 			usageNav: 'Usage & balance',
 			hudTagFiveHour: '5h',
@@ -884,6 +903,8 @@ select.pa-input{cursor:pointer;max-width:240px}
 			noAccounts: '还没有账号，添加一个以保存密钥。',
 			providerRouteMissing: '该提供商尚无 llm-pi-ai 路由，使用账号后才会提供模型。',
 			createRoute: '创建路由',
+			vendorTemplates: '厂商模板',
+			vendorHuaweiMaasHint: '华为云 MaaS：OpenAI 兼容端点 + ModelArts 控制台创建的 API Key。把 ap-southeast-1 换成你控制台所在区域。',
 			nativeProviderHint: '该提供商由插件内置适配器（OAuth）直接提供，不需要 llm-pi-ai 路由。先在下方账号上登录，然后在模型选择器里选 Grok Build 分组。',
 			usageNav: '用量与余额',
 			hudTagFiveHour: '5h',
@@ -2390,6 +2411,16 @@ function usageSlice(data, providerId, account) {
 				setRef(refFromRoute(candidate.id))
 				setError(null)
 			}
+			/** Fill the custom-endpoint draft from a vendor template. */
+			const applyTemplate = (template) => {
+				setCustomId(template.id)
+				setCustomName(template.name)
+				setProtocol(template.protocol)
+				setBaseUrl(template.baseURL)
+				setCustomRef(template.ref)
+				setModels([])
+				setError(null)
+			}
 			const discover = async () => {
 				if (discovering) return
 				const endpoint = baseUrl.trim()
@@ -2605,6 +2636,17 @@ function usageSlice(data, providerId, account) {
 					})),
 			]
 			const customBody = [
+				h('div', { key: 'templates', className: 'pa-field' },
+					h('span', { className: 'pa-label' }, t('vendorTemplates')),
+					h('div', { className: 'pa-rowActions' },
+						PROVIDER_TEMPLATES.map((template) => h('button', {
+							key: template.id,
+							type: 'button',
+							className: 'pa-btnSecondary pa-btnSmall',
+							disabled: busy,
+							onClick: () => applyTemplate(template),
+						}, template.name))),
+					h('p', { className: 'pa-hint' }, t('vendorHuaweiMaasHint'))),
 				h(Field, { key: 'id', id: `${fieldId}-cid`, label: t('customId'), hint: t('customIdHint') },
 					h('input', {
 						id: `${fieldId}-cid`,

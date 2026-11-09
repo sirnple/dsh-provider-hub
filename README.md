@@ -52,6 +52,16 @@ key 今天用了多少、哪个账号还有额度。这个插件把「提供商 
 
 其余提供商若将来也需要订阅制 OAuth，按同样的形状加一个适配器即可（`plugin/grok.js` 是参考实现）。
 
+## 华为云（MaaS）
+
+华为云的模型服务有两层，只有其中一层能接进 DSH：
+
+- **MaaS（ModelArts 模型即服务）** —— 官方 OpenAI 兼容端点 + API Key，按 token 计费。插件里已经预置厂商模板：**添加提供商 → 自定义端点 → 厂商模板 → 华为云 MaaS**，会填好端点
+  `https://api-ap-southeast-1.modelarts-maas.com/v1`、协议 `openai-completions`、凭据引用 `HUAWEI_MAAS_API_KEY`，你只需把区域段换成控制台里的那个（如 `cn-north-4`）并粘 API Key，然后「探测模型」。
+- **码道（CodeArts Agent）** —— 订阅制 IDE 产品（个人体验版免费，可升级套餐），登录走华为云账号浏览器 SSO。它**没有公开 API**：模型调用由本地 AgentKernel 经 `snapengine-apig.cn-north-7.myhuaweicloud.com` 用 `X-Auth-Token`（IAM 临时令牌）发起。要把它接进来只能复制官方客户端的请求，令牌约 24 小时过期且没有免密的刷新路径——插件不会存你的账号密码，所以这条路目前不做内置适配。
+
+实测记录（2026-11）：`GET https://api-ap-southeast-1.modelarts-maas.com/v1/models` 返回 401（端点存在，缺 Key）；`cn-north-4` / `cn-south-1` 域名在本机不解析，按控制台给的区域域名填写即可。
+
 ## 安装
 
 ```sh

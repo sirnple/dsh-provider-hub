@@ -335,6 +335,16 @@ check(presetsShown, 'add-provider dialog renders provider choices')
   await click(signIn, 'sign in from the dialog')
   check(probeCalls.some((call) => call.url.endsWith('/provider-accounts-grok/start')), 'sign-in starts the device flow', probeCalls.map((call) => call.url).join(','))
   check((dialog?.textContent ?? '').includes('ABCD-EFGH'), 'the dialog shows the device code', (dialog?.textContent ?? '').slice(0, 160))
+  // back to the custom form: the Huawei MaaS template fills endpoint + protocol
+  await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
+  await click(byText('Add provider'), 'Add provider (vendor template)')
+  await click(byText('Custom endpoint'), 'Custom endpoint mode')
+  await click(byText('华为云 MaaS'), 'Huawei MaaS template')
+  const templateFields = [...container.querySelectorAll('[role="dialog"] input, [role="dialog"] select')].map((node) => node.value ?? '')
+  check(templateFields.includes('https://api-ap-southeast-1.modelarts-maas.com/v1'), 'the vendor template fills the endpoint', templateFields.join('|'))
+  check(templateFields.includes('openai-completions'), 'the vendor template fills the protocol', templateFields.join('|'))
+  check(templateFields.includes('HUAWEI_MAAS_API_KEY'), 'the vendor template fills the credential reference', templateFields.join('|'))
+  await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
   await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
 }
 
