@@ -318,6 +318,12 @@ check(container.querySelector('[role="dialog"]') === null, 'a switch needs no di
 // 4. add-provider dialog lists catalog presets
 await click(byText('Add provider'), 'Add provider')
 const presetsShown = text().includes('OpenCode Go') && container.querySelectorAll('button').length > 6
+check(text().includes('华为云 MaaS') && text().includes('WorkBuddy（网关）'), 'the catalog tab lists the vendor templates')
+calls.length = 0
+await click(byText('华为云 MaaS'), 'Huawei MaaS from the catalog tab')
+const catalogFields = [...container.querySelectorAll('[role="dialog"] input, [role="dialog"] select')].map((node) => node.value ?? '')
+check(catalogFields.includes('https://api-ap-southeast-1.modelarts-maas.com/v1'), 'a catalog template fills the custom form', catalogFields.join('|'))
+await click(byText('From the catalog'), 'back to the catalog tab')
 check(presetsShown, 'add-provider dialog renders provider choices')
 
 // 4b. the Grok Build preset signs in instead of taking a key

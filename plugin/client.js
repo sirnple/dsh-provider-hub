@@ -700,6 +700,7 @@ select.pa-input{cursor:pointer;max-width:240px}
 			providerRouteMissing: 'This provider has no llm-pi-ai route yet, so models are not offered until an account is used.',
 			createRoute: 'Create route',
 			vendorTemplates: 'Vendor templates',
+			vendorTemplatesHint: 'Or start from a vendor template: it fills the custom form and switches tabs.',
 			vendorHuaweiMaasHint: 'Huawei Cloud MaaS: an OpenAI-compatible endpoint plus an API key from the ModelArts console. Swap the region segment (ap-southeast-1) for the one your console shows.',
 			vendorWorkbuddyHint: 'WorkBuddy has no public API: run the workbuddy2api gateway locally, create a key in its /admin panel, then point this route at it.',
 			nativeProviderHint: 'Served by the plugin\'s built-in adapter (OAuth). No llm-pi-ai route is needed — sign in on the account below, then pick the Grok Build models.',
@@ -915,6 +916,7 @@ select.pa-input{cursor:pointer;max-width:240px}
 			providerRouteMissing: '该提供商尚无 llm-pi-ai 路由，使用账号后才会提供模型。',
 			createRoute: '创建路由',
 			vendorTemplates: '厂商模板',
+			vendorTemplatesHint: '也可以从厂商模板开始：会自动切到自定义端点并填好表单。',
 			vendorHuaweiMaasHint: '华为云 MaaS：OpenAI 兼容端点 + ModelArts 控制台创建的 API Key。把 ap-southeast-1 换成你控制台所在区域。',
 			vendorWorkbuddyHint: 'WorkBuddy 没有公开 API：本地跑 workbuddy2api 网关，在它的 /admin 面板创建密钥，再把这条路由指向该网关。',
 			nativeProviderHint: '该提供商由插件内置适配器（OAuth）直接提供，不需要 llm-pi-ai 路由。先在下方账号上登录，然后在模型选择器里选 Grok Build 分组。',
@@ -2590,6 +2592,23 @@ function usageSlice(data, providerId, account) {
 							disabled: busy,
 							onSelect: () => choose(candidate),
 						}))),
+							// Vendors outside the pi-ai catalog still deserve a first-class entry
+							// point: picking one switches to the custom form, pre-filled.
+							h('div', { key: 'templates', className: 'pa-field' },
+								h('span', { className: 'pa-label' }, t('vendorTemplates')),
+								h('ul', { className: 'pa-templateList' },
+									PROVIDER_TEMPLATES.map((template) => h('li', { key: template.id, className: 'pa-templateItem' },
+										h('button', {
+											type: 'button',
+											className: 'pa-btnSecondary pa-btnSmall',
+											disabled: busy,
+											onClick: () => {
+												applyTemplate(template)
+												setMode('custom')
+											},
+										}, template.name),
+										h('span', { className: 'pa-hint' }, t(template.hintKey))))),
+								h('p', { className: 'pa-hint' }, t('vendorTemplatesHint'))),
 				h(Field, { key: 'name', id: `${fieldId}-name`, label: t('providerName') },
 					h('input', {
 						id: `${fieldId}-name`,
