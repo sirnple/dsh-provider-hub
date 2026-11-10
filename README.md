@@ -69,7 +69,7 @@ WorkBuddy / CodeBuddy 是订阅制桌面端，模型调用走私有协议（上�
 [workbuddy2api](https://github.com/syh0119/workbuddy2api)：本地起一个 OpenAI 兼容服务，把账号里的
 模型（DeepSeek / Kimi / GLM / 混元 / MiniMax 等）暴露成 `/v1`，带积分看板与密钥分发。
 
-插件里已预置厂商模板：**添加提供商 → 自定义端点 → 厂商模板 → WorkBuddy（网关）**
+WorkBuddy 已内置为提供商预设：**添加提供商 → WorkBuddy（网关）**
 
 ```
 端点      http://127.0.0.1:8000/v1          ← workbuddy2api 的默认地址

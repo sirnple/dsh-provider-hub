@@ -1,6 +1,6 @@
 {
   "name": "@sirnple/dsh-provider-hub",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Model provider and account hub for DeepSeek Harness: multi-account API keys per provider with failover, a per-account usage/quota panel in the conversation header, and native Grok Build device-code OAuth.",
   "type": "module",
   "icon": "./assets/icon-180.png",

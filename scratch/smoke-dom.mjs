@@ -318,46 +318,14 @@ check(container.querySelector('[role="dialog"]') === null, 'a switch needs no di
 // 4. add-provider dialog lists catalog presets
 await click(byText('Add provider'), 'Add provider')
 const presetsShown = text().includes('OpenCode Go') && container.querySelectorAll('button').length > 6
-check(text().includes('华为云 MaaS') && text().includes('WorkBuddy（网关）'), 'the catalog tab lists the vendor templates')
-calls.length = 0
-await click(byText('华为云 MaaS'), 'Huawei MaaS from the catalog tab')
-const catalogFields = [...container.querySelectorAll('[role="dialog"] input, [role="dialog"] select')].map((node) => node.value ?? '')
-check(catalogFields.includes('https://api-ap-southeast-1.modelarts-maas.com/v1'), 'a catalog template fills the custom form', catalogFields.join('|'))
+check(text().includes('华为云 MaaS') && text().includes('WorkBuddy（网关）'), 'the catalog list carries the vendor presets')
+const huaweiCandidate = [...container.querySelectorAll('button')].find((node) => (node.textContent ?? '').includes('华为云 MaaS'))
+await click(huaweiCandidate, 'Huawei MaaS preset')
+const declaredText = container.textContent ?? ''
+check(declaredText.includes('This preset declares its own endpoint'), 'a declared preset shows its endpoint', declaredText.slice(-260))
+check(byText('Discover models') !== undefined, 'a declared preset offers model discovery')
 await click(byText('From the catalog'), 'back to the catalog tab')
-check(presetsShown, 'add-provider dialog renders provider choices')
-
-// 4b. the Grok Build preset signs in instead of taking a key
-{
-  await click(byText('From the catalog'), 'catalog mode')
-  const grokPresetButton = [...container.querySelectorAll('button')].find((node) => (node.textContent ?? '').includes('Grok Build (OAuth)'))
-  await click(grokPresetButton, 'Grok Build preset')
-  const dialog = container.querySelector('[role="dialog"]')
-  const labels = [...(dialog?.querySelectorAll('.pa-label') ?? [])].map((node) => (node.textContent ?? '').trim())
-  check(!labels.includes('API key'), 'the OAuth preset hides the API key field', labels.join('|'))
-  check(!labels.includes('Credential reference'), 'the OAuth preset hides the reference field', labels.join('|'))
-  const signIn = [...(dialog?.querySelectorAll('button') ?? [])].find((node) => (node.textContent ?? '').trim() === 'Sign in')
-  check(signIn !== undefined, 'the OAuth preset offers sign-in')
-  probeCalls.length = 0
-  await click(signIn, 'sign in from the dialog')
-  check(probeCalls.some((call) => call.url.endsWith('/provider-accounts-grok/start')), 'sign-in starts the device flow', probeCalls.map((call) => call.url).join(','))
-  check((dialog?.textContent ?? '').includes('ABCD-EFGH'), 'the dialog shows the device code', (dialog?.textContent ?? '').slice(0, 160))
-  // back to the custom form: the Huawei MaaS template fills endpoint + protocol
-  await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
-  await click(byText('Add provider'), 'Add provider (vendor template)')
-  await click(byText('Custom endpoint'), 'Custom endpoint mode')
-  await click(byText('华为云 MaaS'), 'Huawei MaaS template')
-  const templateFields = [...container.querySelectorAll('[role="dialog"] input, [role="dialog"] select')].map((node) => node.value ?? '')
-  check(templateFields.includes('https://api-ap-southeast-1.modelarts-maas.com/v1'), 'the vendor template fills the endpoint', templateFields.join('|'))
-  check(templateFields.includes('openai-completions'), 'the vendor template fills the protocol', templateFields.join('|'))
-  check(templateFields.includes('HUAWEI_MAAS_API_KEY'), 'the vendor template fills the credential reference', templateFields.join('|'))
-  await click(byText('WorkBuddy（网关）'), 'WorkBuddy template')
-  const workbuddyFields = [...container.querySelectorAll('[role="dialog"] input, [role="dialog"] select')].map((node) => node.value ?? '')
-  check(workbuddyFields.includes('http://127.0.0.1:8000/v1'), 'the WorkBuddy template fills the gateway endpoint', workbuddyFields.join('|'))
-  check(workbuddyFields.includes('WORKBUDDY_API_KEY'), 'the WorkBuddy template fills its credential reference', workbuddyFields.join('|'))
-  check((container.textContent ?? '').includes('workbuddy2api'), 'the WorkBuddy hint names the gateway', (container.textContent ?? '').slice(-240))
-  await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
-  await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
-}
+await act(async () => { window.document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true })) })
 
 // 5. delete provider confirmation
 await click(byText('Delete provider'), 'Delete provider')

@@ -5,6 +5,8 @@
 import { readFileSync } from 'node:fs'
 
 const source = readFileSync('C:/Users/Administrator/repos/dsh-provider-hub/plugin/client.js', 'utf8')
+  // line endings are not part of the contract: git may check the file out as CRLF
+  .split('\r\n').join('\n')
 const cssStart = source.indexOf('const CSS = `')
 const cssEnd = source.indexOf('`\n\t\tconst CSS_TAG_ID', cssStart)
 const css = source.slice(cssStart, cssEnd)

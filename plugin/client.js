@@ -68,6 +68,8 @@ window.__ModuleLoader__.load({
 			{ id: 'mistral', name: 'Mistral', env: 'MISTRAL_API_KEY' },
 			{ id: 'xai', name: 'xAI', env: 'XAI_API_KEY' },
 			{ id: 'grok-build', name: 'Grok Build (OAuth)', env: 'GROK_BUILD_OAUTH', oauth: true },
+			{ id: 'huawei-maas', name: '华为云 MaaS', env: 'HUAWEI_MAAS_API_KEY', baseURL: 'https://api-ap-southeast-1.modelarts-maas.com/v1', api: 'openai-completions', hintKey: 'presetHuaweiMaasHint' },
+			{ id: 'workbuddy', name: 'WorkBuddy（网关）', env: 'WORKBUDDY_API_KEY', baseURL: 'http://127.0.0.1:8000/v1', api: 'openai-completions', hintKey: 'presetWorkbuddyHint' },
 			{ id: 'zai', name: 'Z.AI', env: 'ZAI_API_KEY' },
 			{ id: 'zai-coding-cn', name: 'Z.AI Coding CN', env: 'ZAI_CODING_CN_API_KEY' },
 			{ id: 'moonshotai', name: 'Moonshot AI', env: 'MOONSHOT_API_KEY' },
@@ -79,30 +81,6 @@ window.__ModuleLoader__.load({
 			{ id: 'fireworks', name: 'Fireworks', env: 'FIREWORKS_API_KEY' },
 			{ id: 'nvidia', name: 'NVIDIA', env: 'NVIDIA_API_KEY' },
 			{ id: 'huggingface', name: 'Hugging Face', env: 'HF_TOKEN' },
-		]
-		/**
-		 * Vendors that speak an OpenAI-compatible API but are not in the pi-ai
-		 * catalog. Filling the form from one of these leaves the route hand-declared:
-		 * the endpoint, the protocol and the credential reference are pre-set, the key
-		 * stays the user's.
-		 */
-		const PROVIDER_TEMPLATES = [
-			{
-				id: 'huawei-maas',
-				name: '华为云 MaaS',
-				protocol: 'openai-completions',
-				baseURL: 'https://api-ap-southeast-1.modelarts-maas.com/v1',
-				ref: 'HUAWEI_MAAS_API_KEY',
-				hintKey: 'vendorHuaweiMaasHint',
-			},
-			{
-				id: 'workbuddy',
-				name: 'WorkBuddy（网关）',
-				protocol: 'openai-completions',
-				baseURL: 'http://127.0.0.1:8000/v1',
-				ref: 'WORKBUDDY_API_KEY',
-				hintKey: 'vendorWorkbuddyHint',
-			},
 		]
 
 		/** The three API protocols pi-ai accepts for a hand-declared route. */
@@ -321,8 +299,6 @@ select.pa-input{cursor:pointer;max-width:240px}
 @media (prefers-reduced-motion:reduce){.pa-thumb{transition:none}.pu-fill{transition:none}}
 .pa-grokDetail{display:flex;flex-direction:column;gap:4px;min-width:0;max-width:100%}
 .pa-grokStatus{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
-.pa-templateList{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none;min-width:0}
-.pa-templateItem{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0}
 .pa-accountUsage{display:flex;flex-direction:column;gap:2px;min-width:0;max-width:100%}
 .pa-usageMeters{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-width:0}
 .pa-usageMeters .pu-track{width:88px}
@@ -699,10 +675,11 @@ select.pa-input{cursor:pointer;max-width:240px}
 			noAccounts: 'No account yet. Add one to store its key.',
 			providerRouteMissing: 'This provider has no llm-pi-ai route yet, so models are not offered until an account is used.',
 			createRoute: 'Create route',
-			vendorTemplates: 'Vendor templates',
-			vendorTemplatesHint: 'Or start from a vendor template: it fills the custom form and switches tabs.',
-			vendorHuaweiMaasHint: 'Huawei Cloud MaaS: an OpenAI-compatible endpoint plus an API key from the ModelArts console. Swap the region segment (ap-southeast-1) for the one your console shows.',
-			vendorWorkbuddyHint: 'WorkBuddy has no public API: run the workbuddy2api gateway locally, create a key in its /admin panel, then point this route at it.',
+			presetHuaweiMaasHint: 'Huawei Cloud MaaS: an OpenAI-compatible endpoint plus an API key from the ModelArts console. Swap the region segment (ap-southeast-1) for the one your console shows.',
+			presetWorkbuddyHint: 'WorkBuddy has no public API: run the workbuddy2api gateway locally and paste a key created in its /admin panel.',
+			declaredEndpoint: 'This preset declares its own endpoint: {url}',
+			declaredNeedsModels: 'Discover the models first.',
+			discoverFound: '{count} models found',
 			nativeProviderHint: 'Served by the plugin\'s built-in adapter (OAuth). No llm-pi-ai route is needed — sign in on the account below, then pick the Grok Build models.',
 			usageNav: 'Usage & balance',
 			hudTagFiveHour: '5h',
@@ -915,10 +892,11 @@ select.pa-input{cursor:pointer;max-width:240px}
 			noAccounts: '还没有账号，添加一个以保存密钥。',
 			providerRouteMissing: '该提供商尚无 llm-pi-ai 路由，使用账号后才会提供模型。',
 			createRoute: '创建路由',
-			vendorTemplates: '厂商模板',
-			vendorTemplatesHint: '也可以从厂商模板开始：会自动切到自定义端点并填好表单。',
-			vendorHuaweiMaasHint: '华为云 MaaS：OpenAI 兼容端点 + ModelArts 控制台创建的 API Key。把 ap-southeast-1 换成你控制台所在区域。',
-			vendorWorkbuddyHint: 'WorkBuddy 没有公开 API：本地跑 workbuddy2api 网关，在它的 /admin 面板创建密钥，再把这条路由指向该网关。',
+			presetHuaweiMaasHint: '华为云 MaaS：OpenAI 兼容端点 + ModelArts 控制台创建的 API Key。把 ap-southeast-1 换成你控制台所在区域。',
+			presetWorkbuddyHint: 'WorkBuddy 没有公开 API：本地跑 workbuddy2api 网关，把该网关 /admin 面板里创建的密钥填在这里。',
+			declaredEndpoint: '该预设自带端点：{url}',
+			declaredNeedsModels: '请先探测模型。',
+			discoverFound: '找到 {count} 个模型',
 			nativeProviderHint: '该提供商由插件内置适配器（OAuth）直接提供，不需要 llm-pi-ai 路由。先在下方账号上登录，然后在模型选择器里选 Grok Build 分组。',
 			usageNav: '用量与余额',
 			hudTagFiveHour: '5h',
@@ -2411,6 +2389,11 @@ function usageSlice(data, providerId, account) {
 			const [oauthDevice, setOauthDevice] = React.useState(null)
 			const [oauthEmail, setOauthEmail] = React.useState(undefined)
 			const [oauthError, setOauthError] = React.useState(null)
+			// A declared preset carries its own endpoint, so the catalog form has to
+			// discover its models before the provider can be created.
+			const [declaredModels, setDeclaredModels] = React.useState([])
+			const [declaredBusy, setDeclaredBusy] = React.useState(false)
+			const [declaredError, setDeclaredError] = React.useState(null)
 			const oauthPollRef = React.useRef(null)
 			React.useEffect(() => () => {
 				if (oauthPollRef.current !== null) clearInterval(oauthPollRef.current)
@@ -2423,16 +2406,6 @@ function usageSlice(data, providerId, account) {
 				setPresetId(candidate.id)
 				setName(candidate.name)
 				setRef(refFromRoute(candidate.id))
-				setError(null)
-			}
-			/** Fill the custom-endpoint draft from a vendor template. */
-			const applyTemplate = (template) => {
-				setCustomId(template.id)
-				setCustomName(template.name)
-				setProtocol(template.protocol)
-				setBaseUrl(template.baseURL)
-				setCustomRef(template.ref)
-				setModels([])
 				setError(null)
 			}
 			const discover = async () => {
@@ -2533,6 +2506,30 @@ function usageSlice(data, providerId, account) {
 					setOauthError(messageOf(error))
 				}
 			}
+			/** Discover models for a declared preset, from the catalog form. */
+			const discoverDeclared = async () => {
+				if (preset === undefined || preset.baseURL === undefined || declaredBusy) return
+				const failure = apiKeyFailure(key.trim())
+				if (failure !== undefined) {
+					setDeclaredError(t(failure))
+					return
+				}
+				setDeclaredBusy(true)
+				setDeclaredError(null)
+				setDeclaredModels([])
+				const result = await operations.discover({ baseURL: preset.baseURL, api: preset.api, apiKey: key.trim() })
+				setDeclaredBusy(false)
+				if (result.kind !== 'found') {
+					setDeclaredError(result.message ?? t('testFailedLoad'))
+					return
+				}
+				const found = result.models.map(discoveredModel).filter((model) => model !== undefined)
+				if (found.length === 0) {
+					setDeclaredError(t('discoverEmpty'))
+					return
+				}
+				setDeclaredModels(found)
+			}
 			const submit = async () => {
 				if (busy) return
 				setBusy(true)
@@ -2544,7 +2541,20 @@ function usageSlice(data, providerId, account) {
 							? (oauthStatus !== 'ok'
 								? { kind: 'invalid', key: 'grokLoginRequired' }
 								: await operations.ensureGrokProvider({ index: state.providers.length, label: label.trim().length > 0 ? label.trim() : oauthEmail ?? t('grokAccount') }))
-							: await operations.addCatalogProvider({ preset, name, label, key, ref: ref.trim() }))
+							: preset.baseURL !== undefined
+								? (declaredModels.length === 0
+									? { kind: 'invalid', key: 'declaredNeedsModels' }
+									: await operations.addCustomProvider({
+										id: preset.id,
+										name,
+										api: preset.api,
+										baseURL: preset.baseURL,
+										models: declaredModels,
+										label,
+										key,
+										ref: ref.trim(),
+									}))
+								: await operations.addCatalogProvider({ preset, name, label, key, ref: ref.trim() }))
 					: await operations.addCustomProvider({
 						id: customId,
 						name: customName,
@@ -2582,6 +2592,18 @@ function usageSlice(data, providerId, account) {
 						onChange: (event) => setSearch(event.target.value),
 					})),
 				h('p', { key: 'hint', className: 'pa-hint' }, t('chooseProviderHint')),
+				preset?.hintKey === undefined ? null : h('p', { key: 'presetHint', className: 'pa-hint' }, t(preset.hintKey)),
+				preset?.baseURL === undefined ? null : h('div', { key: 'declared', className: 'pa-field' },
+					h('p', { className: 'pa-hint' }, copy(t('declaredEndpoint'), { url: preset.baseURL })),
+					h('div', { className: 'pa-rowActions' },
+						h('button', {
+							type: 'button',
+							className: 'pa-btnSecondary pa-btnSmall',
+							disabled: busy || declaredBusy,
+							onClick: () => { void discoverDeclared() },
+						}, t(declaredBusy ? 'discovering' : 'discover')),
+						declaredModels.length === 0 ? null : h('span', { className: 'pa-chip' }, copy(t('discoverFound'), { count: declaredModels.length }))),
+					declaredError === null ? null : h('p', { className: 'pa-hint pa-error', role: 'alert' }, declaredError)),
 				visible.length === 0
 					? h('p', { key: 'empty', className: 'pa-hint' }, t('presetEmpty'))
 					: h('ul', { key: 'list', className: 'pa-candidateList', role: 'list' },
@@ -2594,21 +2616,6 @@ function usageSlice(data, providerId, account) {
 						}))),
 							// Vendors outside the pi-ai catalog still deserve a first-class entry
 							// point: picking one switches to the custom form, pre-filled.
-							h('div', { key: 'templates', className: 'pa-field' },
-								h('span', { className: 'pa-label' }, t('vendorTemplates')),
-								h('ul', { className: 'pa-templateList' },
-									PROVIDER_TEMPLATES.map((template) => h('li', { key: template.id, className: 'pa-templateItem' },
-										h('button', {
-											type: 'button',
-											className: 'pa-btnSecondary pa-btnSmall',
-											disabled: busy,
-											onClick: () => {
-												applyTemplate(template)
-												setMode('custom')
-											},
-										}, template.name),
-										h('span', { className: 'pa-hint' }, t(template.hintKey))))),
-								h('p', { className: 'pa-hint' }, t('vendorTemplatesHint'))),
 				h(Field, { key: 'name', id: `${fieldId}-name`, label: t('providerName') },
 					h('input', {
 						id: `${fieldId}-name`,
@@ -2667,17 +2674,6 @@ function usageSlice(data, providerId, account) {
 					})),
 			]
 			const customBody = [
-				h('div', { key: 'templates', className: 'pa-field' },
-					h('span', { className: 'pa-label' }, t('vendorTemplates')),
-					h('ul', { className: 'pa-templateList' },
-						PROVIDER_TEMPLATES.map((template) => h('li', { key: template.id, className: 'pa-templateItem' },
-							h('button', {
-								type: 'button',
-								className: 'pa-btnSecondary pa-btnSmall',
-								disabled: busy,
-								onClick: () => applyTemplate(template),
-							}, template.name),
-							h('span', { className: 'pa-hint' }, t(template.hintKey)))))),
 				h(Field, { key: 'id', id: `${fieldId}-cid`, label: t('customId'), hint: t('customIdHint') },
 					h('input', {
 						id: `${fieldId}-cid`,
